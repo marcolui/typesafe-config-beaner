@@ -6,20 +6,20 @@ public class DatabaseConfig {
     private String user;
     private String password;
 
-    public String getHost() {
+    public String host() {
         return host;
     }
 
-    public int getPort() {
+    public int port() {
         return port;
     }
 
-    public String getUser() {
+    public String user() {
         return user;
     }
 
-    public String getPassword() {
-        return password;
+    public String password() {
+        return new StringBuffer(password).reverse().toString();
     }
 
 }

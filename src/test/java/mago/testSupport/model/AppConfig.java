@@ -10,45 +10,45 @@ public class AppConfig {
     private String host;
     private Integer port;
     private List<String> reserved;
-    List<DatabaseConfig> databases;
-    List<String> tags;
+    private List<DatabaseConfig> databases;
+    private List<String> tags;
     private String env;
-    List caches;
+    private List caches;
     private SystemConfig system;
 
-    public String getAppName() {
+    public String appName() {
         return appName;
     }
 
-    public String getHostName() {
+    public String hostname() {
         return host;
     }
 
-    public Integer getPort() {
+    public Integer port() {
         return port;
     }
 
-    public List<DatabaseConfig> getDatabases() {
+    public List<DatabaseConfig> databaseConfigs() {
         return databases;
     }
 
-    public List<String> getReserved() {
+    public List<String> reserved() {
         return reserved;
     }
 
-    public List<String> getTags() {
+    public List<String> tags() {
         return tags;
     }
 
     public SystemConfig systemConfig() {
         return system;
     }
-    public String getEnv() {
+    public String env() {
         return env;
     }
 
     @Test
-    public List<Map> getCaches() {
+    public List<Map> caches() {
         return caches;
     }
 }

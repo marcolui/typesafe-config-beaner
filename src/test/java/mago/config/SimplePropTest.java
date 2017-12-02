@@ -13,22 +13,27 @@ public class SimplePropTest {
     private static AppConfig baseConfig = new ConfigTestHelper().loadBaseConfig();
 
     @Test
-    public void parentPropIsInherited() throws Exception {
-        assertThat(config.getAppName(), equalTo("Everything is awesome"));
-        assertThat(baseConfig.getAppName(), equalTo("Everything is awesome"));
+    public void parentPropIsInherited() {
+        assertThat(config.appName(), equalTo("Everything is awesome"));
+        assertThat(baseConfig.appName(), equalTo("Everything is awesome"));
     }
 
     @Test
     public void childCanHaveItsOwnProp() {
-        assertThat(config.getHostName(), equalTo("http://aweful.indeed"));
-        assertThat(config.getPort(), equalTo(5354));
-        assertThat(baseConfig.getHostName(), isEmptyOrNullString());
-        assertThat(baseConfig.getPort(), equalTo(null));
+        assertThat(config.hostname(), equalTo("http://aweful.indeed"));
+        assertThat(config.port(), equalTo(5354));
+        assertThat(baseConfig.hostname(), isEmptyOrNullString());
+        assertThat(baseConfig.port(), equalTo(null));
     }
 
     @Test
-    public void childPropOverridesParentProp() throws Exception {
-        assertThat(config.getEnv(), equalTo("dev"));
-        assertThat(baseConfig.getEnv(), equalTo("all"));
+    public void canUseGetterToManipulateProp() {
+        assertThat(config.databaseConfigs().get(0).password(), equalTo("dumbly-encrypted"));
+    }
+
+    @Test
+    public void childPropOverridesParentProp() {
+        assertThat(config.env(), equalTo("dev"));
+        assertThat(baseConfig.env(), equalTo("all"));
     }
 }

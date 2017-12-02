@@ -20,8 +20,8 @@ public class ListPropTest {
     private static AppConfig baseConfig = new ConfigTestHelper().loadBaseConfig();
 
     @Test
-    public void canLoadListOfMaps() throws Exception {
-        List<Map> actualCacheConfigs = config.getCaches();
+    public void canLoadListOfMaps() {
+        List<Map> actualCacheConfigs = config.caches();
         assertThat(actualCacheConfigs, hasSize(2));
 
         assertThat(actualCacheConfigs.get(0).get("url"), equalTo("meh-1"));
@@ -32,7 +32,7 @@ public class ListPropTest {
 
     @Test
     public void canLoadListOfBeansIfBeanTypeIsSpecified() throws Exception {
-        List<DatabaseConfig> actualDatabaseConfigs = config.getDatabases();
+        List<DatabaseConfig> actualDatabaseConfigs = config.databaseConfigs();
         assertThat(actualDatabaseConfigs, hasSize(2));
 
         assertServerHostAndUser(actualDatabaseConfigs.get(0), "server-1", 8765, "fairy");
@@ -40,13 +40,13 @@ public class ListPropTest {
     }
 
     @Test
-    public void childListPropOverridesParent() throws Exception {
-        assertThat(config.getTags(), equalTo(asList("playground", "cool")));
-        assertThat(baseConfig.getTags(), equalTo(asList("awesome")));
+    public void childListPropOverridesParent() {
+        assertThat(config.tags(), equalTo(asList("playground", "cool")));
+        assertThat(baseConfig.tags(), equalTo(asList("awesome")));
     }
 
     @Test
-    public void emptyArrayPropIsInitializedAsEmptyList() throws Exception {
-        assertThat(config.getReserved(), equalTo(Collections.EMPTY_LIST));
+    public void emptyArrayPropIsInitializedAsEmptyList() {
+        assertThat(config.reserved(), equalTo(Collections.EMPTY_LIST));
     }
 }
