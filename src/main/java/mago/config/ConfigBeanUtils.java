@@ -25,7 +25,7 @@ public final class ConfigBeanUtils {
         } catch (IllegalAccessException e) {
             throw new ConfigException("Unable to set field on bean", e);
         } catch (NoSuchFieldException e) {
-            throw new ConfigException("Config field not found on bean", e);
+            throw new ConfigException("Config field not found on bean: " + e.getMessage(), e);
         }
     }
 

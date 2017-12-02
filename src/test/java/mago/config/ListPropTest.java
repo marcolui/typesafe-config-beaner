@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static mago.testSupport.utils.BeanerTestAsserts.assertServerHostAndUser;
@@ -15,10 +16,22 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 public class ListPropTest {
-    static AppConfig config = new ConfigTestHelper().loadDevConfig(AppConfig.class);
+    private static AppConfig config = new ConfigTestHelper().loadDevConfig();
+    private static AppConfig baseConfig = new ConfigTestHelper().loadBaseConfig();
 
     @Test
-    public void canLoadListOfObjects() throws Exception {
+    public void canLoadListOfMaps() throws Exception {
+        List<Map> actualCacheConfigs = config.getCaches();
+        assertThat(actualCacheConfigs, hasSize(2));
+
+        assertThat(actualCacheConfigs.get(0).get("url"), equalTo("meh-1"));
+        assertThat(actualCacheConfigs.get(0).get("size"), equalTo(4));
+        assertThat(actualCacheConfigs.get(1).get("url"), equalTo("meh-2"));
+        assertThat(actualCacheConfigs.get(1).get("size"), equalTo(80));
+    }
+
+    @Test
+    public void canLoadListOfBeansIfBeanTypeIsSpecified() throws Exception {
         List<DatabaseConfig> actualDatabaseConfigs = config.getDatabases();
         assertThat(actualDatabaseConfigs, hasSize(2));
 
@@ -27,8 +40,9 @@ public class ListPropTest {
     }
 
     @Test
-    public void childAttributeOverridesParent() throws Exception {
-        assertThat(config.getTags(), equalTo(asList("dev")));
+    public void childListPropOverridesParent() throws Exception {
+        assertThat(config.getTags(), equalTo(asList("playground", "cool")));
+        assertThat(baseConfig.getTags(), equalTo(asList("awesome")));
     }
 
     @Test
