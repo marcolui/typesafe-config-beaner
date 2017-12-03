@@ -20,9 +20,9 @@ public final class TypeSafeConfigUtils {
         stream.println(config.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setComments(false).setJson(false)));
     }
 
-    private static Pattern p = Pattern.compile("-(.)");
+    private static Pattern p = Pattern.compile("-(\\S)");
 
-    public static String configKeyToCamelCase(String configKey) {
+    static String configKeyToCamelCase(String configKey) {
         Matcher m = p.matcher(configKey);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
