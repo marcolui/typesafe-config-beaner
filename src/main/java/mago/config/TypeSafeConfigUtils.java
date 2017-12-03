@@ -1,13 +1,13 @@
 package mago.config;
 
-import com.google.common.base.CaseFormat;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
 import com.typesafe.config.ConfigRenderOptions;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class TypeSafeConfigUtils {
     private TypeSafeConfigUtils(){}
@@ -20,7 +20,15 @@ public final class TypeSafeConfigUtils {
         stream.println(config.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setComments(false).setJson(false)));
     }
 
+    private static Pattern p = Pattern.compile("-(.)");
+
     public static String configKeyToCamelCase(String configKey) {
-        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, configKey.replaceAll("[.|-]", "_").toLowerCase());
+        Matcher m = p.matcher(configKey);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, m.group(1).toUpperCase());
+        }
+        m.appendTail(sb);
+        return sb.toString();
     }
 }
